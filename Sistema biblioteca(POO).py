@@ -71,7 +71,7 @@ while opcao != 0:
     # Verificando a opção escolhida:
     if opcao == 1:
         print ('Você selecionou a opção 1 (Cadastrar livro)\n')
-
+        limpar()
         # Verificando a quantidade de livros cadastrados (se for maior que 5 sugere limpar o arquivo):
         quantidade_cadastro += 1
         if quantidade_cadastro > 5: 
@@ -85,6 +85,7 @@ while opcao != 0:
                         if verificar == False:
                             limpar_arquivo()
                             quantidade_cadastro = 1
+                            ids_usadas = []
                             print ('Dados limpos com sucesso!\n')
                         break
                     elif limpar_dados == 'N':
@@ -97,8 +98,11 @@ while opcao != 0:
                 except ValueError:
                     print ('\nOpção inválida!\n')
                     sleep(2)
-
+            if limpar_dados == 'N':
+                #voltar menu
+                continue
         # Gerando o código do livro e verificando se já existe:
+        print(f'Livro {quantidade_cadastro}')
         id = id_livro()
         if id not in ids_usadas: print (f'Código do livro: {id}\n') 
         else: 
@@ -106,7 +110,7 @@ while opcao != 0:
             print (f'Código do livro: {id}\n')
 
         # Recebendo os dados do livro:
-        print(f'Livro {quantidade_cadastro}')
+
         livro = nome_livro()
         autor = nome_autor()
         editora = nome_editora()
