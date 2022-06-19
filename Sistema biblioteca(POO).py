@@ -41,3 +41,115 @@ ATENÇÃO:
 
 '''
 
+# Iniciando o script:
+
+# Importando as bibliotecas:
+from __future__ import barry_as_FLUFL
+from asyncio import constants
+from logging.handlers import QueueHandler
+from mimetypes import init
+from statistics import quantiles
+from funcoes import id_livro, limpar, menu, nome_autor, nome_editora, nome_livro, livros, verificar_arquivo, mostrar_livros, fechar_arquivo, limpar_arquivo, contador_livros
+from time import sleep
+
+# Variáveis:
+ids_usadas = []
+quantidade_cadastro = contador_livros()
+opcao = None
+voltar = None
+
+# Iniciando o programa
+
+# Limpando a tela
+limpar()
+
+# Repedir o menu até que o usuário escolha a opção 0:
+while opcao != 0:
+    # Mostrando o menu
+    opcao = menu()
+
+    # Verificando a opção escolhida:
+    if opcao == 1:
+        print ('Você selecionou a opção 1 (Cadastrar livro)\n')
+
+        # Verificando a quantidade de livros cadastrados (se for maior que 5 sugere limpar o arquivo):
+        quantidade_cadastro += 1
+        if quantidade_cadastro > 5: 
+            print ('Sistema de cadastro lotado. Não é possível armazenar mais informações!') 
+            # Perguntando se o usuário deseja limpar o arquivo:
+            while True:
+                try:
+                    limpar_dados = input ('\nDeseja limpar os dados? (S/N): ').upper()
+                    if limpar_dados == 'S':
+                        verificar = verificar_arquivo()
+                        if verificar == False:
+                            limpar_arquivo()
+                            quantidade_cadastro = 1
+                            print ('Dados limpos com sucesso!\n')
+                        break
+                    elif limpar_dados == 'N':
+                        print ('\nNão será possível armazenar mais informações!')
+                        sleep(1)
+                        break
+                    else:
+                        print ('\nOpção Invalida!\n')
+                        sleep(2)
+                except ValueError:
+                    print ('\nOpção inválida!\n')
+                    sleep(2)
+
+        # Gerando o código do livro e verificando se já existe:
+        id = id_livro()
+        if id not in ids_usadas: print (f'Código do livro: {id}\n') 
+        else: 
+            id = id_livro()
+            print (f'Código do livro: {id}\n')
+
+        # Recebendo os dados do livro:
+        print(f'Livro {quantidade_cadastro}')
+        livro = nome_livro()
+        autor = nome_autor()
+        editora = nome_editora()
+
+        # Salvando os dados no arquivo:
+        livro = livros(id, livro, autor, editora)
+        print ('\nLivro cadastrado com sucesso!')
+        sleep(2)
+
+    # Verificando a opção escolhida:
+    elif opcao == 2:
+        print ('Você selecionou a opção 2 (Mostrar livros)\n')
+        # Verificando se o arquivo está vazio:
+        arquivo = verificar_arquivo()
+
+        # Se o arquivo estiver vazio, mostra uma mensagem de erro:
+        if arquivo == True:
+            print ('\nNão há livros cadastrados')
+            while voltar != 's':
+                mostrar_livros()
+                try:
+                    voltar = input('\nDeseja voltar ao menu? (s/n): ').upper()
+                    if voltar == 'S':
+                        break
+                except ValueError:
+                    print ('\nOpção inválida!')
+
+        # Se o arquivo não estiver vazio, mostra os livros:
+        else:
+            while voltar != 's':
+                mostrar_livros()
+                try:
+                    voltar = input('\nDeseja voltar ao menu? (s/n): ').upper()
+                    if voltar == 'S':
+                        break
+                except ValueError:
+                    print ('\nOpção inválida!')
+
+    # Verificando a opção escolhida:
+    # Se a opção for 0, fecha o programa:
+    elif opcao == 0:
+        limpar()
+        print ('Você selecionou a opção 0 (Encerrar)\n')
+        print ('Programa encerrado!')
+        fechar_arquivo()
+        exit()
