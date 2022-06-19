@@ -17,22 +17,30 @@ def menu():
     # Boas vindas
     limpar()
     print('Bem vindo ao sistema de cadastro de livros!')
+    sleep(1)
     print('\nMenu')
     print('----\n')
+    sleep(1)
     print('1. Inserir um novo cadastro')
+    sleep(0.5)
     print('2. Mostrar todos os cadastros')
+    sleep(0.5)
     print('0. Encerrar\n')
+    sleep(0.5)
 
     # Recebendo a opção e verificando se é válida:
     while True:
         try:
+            sleep(0.5)
             opcao = int(input('Digite a opção desejada: ')) 
             if opcao == 1 or opcao == 2 or opcao == 0:
                 break
             else:
+                sleep(0.5)
                 print('Opção inválida!')    
                 continue
         except ValueError: 
+            sleep(0.5)
             print ('\nOpção inválida!')
     return opcao
 
@@ -43,16 +51,19 @@ def id_livro():
 
 # Funcã́o para o nome do autor
 def nome_autor():
+    sleep(0.5)
     nome = str(input('Digite o nome do autor: '))
     return nome
 
 # Função para o nome do livro
 def nome_livro():
+    sleep(0.5)
     nome = str(input('Digite o nome do livro: '))
     return nome
 
 # Função nome editora
 def nome_editora():
+    sleep(0.5)
     nome = str(input('Digite o nome da editora: '))
     return nome
 
